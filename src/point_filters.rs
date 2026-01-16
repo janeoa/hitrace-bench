@@ -63,7 +63,11 @@ static SMAPS_REGEX: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 static TESTCASE_REGEX: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^TESTCASE_PROFILING: (.*?) (\d+)$").expect("Could not parse regexp")
+    Regex::new(concat!(
+        r"^TESTCASE_PROFILING: (.*?) (\d+)$",
+        "|",
+        r"^TESTCASE_PROFILING: (.*?)\|(\d+)|\w*\d+$"
+    )).expect("Could not parse regexp")
 });
 
 #[derive(Debug)]
